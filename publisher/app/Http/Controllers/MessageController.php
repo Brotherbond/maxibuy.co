@@ -58,7 +58,7 @@ class MessageController extends Controller
 
                 // Dispatch using database queue as a scalable approach
                 try {
-                    // dispatchMessageToSubscribers::dispatch($targetTopic, $payload);
+                    dispatchMessageToSubscribers::dispatch($targetTopic, $payload);
                 } catch (\Exception $err) {
                     return [501, 'error', $err];
                 }
