@@ -47,7 +47,6 @@ class MessageController extends Controller
                 'message' => $payload->message,
                 'topic_id' => $targetTopic->id
             ]);
-
             if ($MessageToTopic) {
                 $AllSubscribers = $targetTopic->subscribers->count(); // count number of subscribers subscribed to the topic / Target audience
 
@@ -55,15 +54,16 @@ class MessageController extends Controller
                 if ($AllSubscribers == 0) {
                     return [200, 'success', 'Message added successfully but the topic has no subscribers'];
                 }
-
+                
                 // Dispatch using database queue as a scalable approach
                 try {
                     dispatchMessageToSubscribers::dispatch($targetTopic, $payload);
+                    return [200, 'success', 'Messageq'];
                 } catch (\Exception $err) {
                     return [501, 'error', $err];
                 }
             } else {
-                return [501, 'error', 'Message was not created'];
+                return [501, 'error', 'Message was neither created nor sent'];
             }
         } catch (\Exception $err) { // catch and return unhandled exceptions
             return [500, 'error', $err];
