@@ -2,85 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\dispatchMessageToSubscribers;
 use App\Http\Requests\StoremessageRequest;
 use App\Http\Requests\UpdatemessageRequest;
+use Illuminate\Http\Request;
 use App\Models\Message;
+use App\Models\Topic;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function publish(Request $request, $topic)
     {
-        //
+        [$code, $status, $message] = [404, 'failed', 'Topic not found'];
+
+        $request->validate([
+            'message' => 'required|string',
+        ]);
+
+        $targetTopic = Topic::find($topic);
+        if (!$targetTopic) { // topic not found
+            [$code, $status, $message] = [404, 'failed', 'Topic not found'];
+        } else {
+            // prepare message  for notification
+            $payload = ([
+                'topic' => $targetTopic->topic,
+                'message' => $request->message,
+            ]);
+            // cast payload to object then save and publish to topic subscribers
+            [$code, $status, $message] = $this->sendMessage($targetTopic, (object) $payload);
+        }
+        return response()->json([
+            'code' => $code,
+            'status' => $status,
+            'message' => $message,
+            'data' => $targetTopic ?? [],
+        ], $code);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    private  function sendMessage($targetTopic, $payload) // method to save the message and publish to subscribers
     {
-        //
-    }
+        try {
+            $MessageToTopic = Message::create([
+                'message' => $payload->message,
+                'topic_id' => $targetTopic->id
+            ]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoremessageRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoremessageRequest $request)
-    {
-        //
-    }
+            if ($MessageToTopic) {
+                $AllSubscribers = $targetTopic->subscribers->count(); // count number of subscribers subscribed to the topic / Target audience
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function show(message $message)
-    {
-        //
-    }
+                // 0 subscribers for the topic
+                if ($AllSubscribers == 0) {
+                    return [200, 'success', 'Message added successfully but the topic has no subscribers'];
+                }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(message $message)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdatemessageRequest  $request
-     * @param  \App\Models\message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdatemessageRequest $request, message $message)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\message  $message
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(message $message)
-    {
-        //
+                // Dispatch using database queue as a scalable approach
+                try {
+                    // dispatchMessageToSubscribers::dispatch($targetTopic, $payload);
+                } catch (\Exception $err) {
+                    return [501, 'error', $err];
+                }
+            } else {
+                return [501, 'error', 'Message was not created'];
+            }
+        } catch (\Exception $err) { // catch and return unhandled exceptions
+            return [500, 'error', $err];
+        }
     }
 }

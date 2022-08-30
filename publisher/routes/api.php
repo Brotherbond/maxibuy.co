@@ -24,8 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 // Route for Topic controllers
-Route::apiResource('topics', 'App\Http\Controllers\TopicController');
+Route::apiResource('topics', TopicController::class);
 
 Route::post('subscribe/{topic}', [SubscriberController::class, 'create'])->name('subscribe');
 
-Route::post('publish/{topic}', [TopicController::class, 'publish'])->name('publish');
+Route::post('publish/{topic}', [MessageController::class, 'publish'])->name('publish');
