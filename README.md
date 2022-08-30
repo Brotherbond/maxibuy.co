@@ -18,7 +18,7 @@ cp -r subscriber subscriber2
 
 composer install && ./vendor/bin/sail up -d
 
-## To send notification from publisher on a seperate terminal
+## To send notification from publisher on a separate terminal
 
 php artisan queue:work
 
