@@ -8,4 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class topic extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'topic'
+    ];
+
+
+    public function subscribers()
+    {
+        return $this->hasMany(Subscriber::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

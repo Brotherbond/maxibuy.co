@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
+            $table->string('url');
+            $table->unsignedBigInteger('topic_id')->nullable();
+            $table->foreign('topic_id')
+                ->references('id')
+                ->on('topics')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

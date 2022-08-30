@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class message extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'url',
+        'topic'
+    ];
+
+    public function Topic()
+    {
+        return $this->belongsTo(Topic::class);
+    }
 }

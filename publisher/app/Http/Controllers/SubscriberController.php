@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoresubscriberRequest;
 use App\Http\Requests\UpdatesubscriberRequest;
 use App\Models\subscriber;
+use Illuminate\Http\Request;
+use App\Models\Topic;
 
 class SubscriberController extends Controller
 {
@@ -23,9 +25,9 @@ class SubscriberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request, Topic $topic)
     {
-        //
+        $targetTopic = Topic::find($topic);
     }
 
     /**
