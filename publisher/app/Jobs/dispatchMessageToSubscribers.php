@@ -46,7 +46,7 @@ class dispatchMessageToSubscribers implements ShouldQueue
                 throw $exception;
             }
             // reschedule this job to be executed after 1hour=>3600
-            $this->release(3600);
+            $this->release(80);
             return;
         }
     }

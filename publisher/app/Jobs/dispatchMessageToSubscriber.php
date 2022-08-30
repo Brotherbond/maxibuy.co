@@ -43,7 +43,7 @@ class dispatchMessageToSubscriber implements ShouldQueue
         // guzzle http cient post request to subscriber server 
 
         try {
-            $response = Http::post($this->subscriber->url . '/messageWebhook', [
+            $response = Http::post($this->subscriber->url . '/api/messageWebhook', [
                 'topic' => $this->payload->topic,
                 'message' => $this->payload->message,
             ]);
@@ -58,7 +58,7 @@ class dispatchMessageToSubscriber implements ShouldQueue
                 throw $exception;
             }
             // reschedule this job to be executed after 1hour=>3600
-            $this->release(3600);
+            $this->release(80);
             return;
         }
     }
