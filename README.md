@@ -12,9 +12,11 @@ cp -r subscriber subscriber2
 
 - set APP_PORT, VITE_PORT and FORWARD_ values in the new .env file
 
-# Open each server folder in terminal, install packages then sail up
+## Open each server folder in terminal, install packages then sail up
 composer install && ./vendor/bin/sail up -d
 
+## install and run blade in dev mode
+pnpm i && pnpm run dev  # NB pnpm is used here just like npm or yarn 
 # To stop process, close from docker or open required server folder in terminal, then sail down
 ./vendor/bin/sail down
 

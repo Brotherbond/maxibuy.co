@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class subscriber extends Model
+class Subscriber extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'url',
-        'topic'
+        'topic_id'
     ];
 
     public function Topic()

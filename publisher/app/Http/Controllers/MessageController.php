@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoremessageRequest;
 use App\Http\Requests\UpdatemessageRequest;
-use App\Models\message;
+use App\Models\Message;
 
 class MessageController extends Controller
 {

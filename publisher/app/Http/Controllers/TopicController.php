@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoretopicRequest;
-use App\Http\Requests\UpdatetopicRequest;
-use App\Models\topic;
+use App\Http\Requests\StoreTopicRequest;
+use App\Http\Requests\UpdateTopicRequest;
+use Illuminate\Http\Request;
+use App\Models\Topic;
 
 class TopicController extends Controller
 {
@@ -15,48 +16,71 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
-    }
+        return response()->json([
+            'code' => 200,
+            'status' => 'success',
+            'message' => 'Topics returned successfully',
+            'data' => Topic::all()
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        ], 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoretopicRequest  $request
+     * @param  \App\Http\Requests\StoreTopicRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoretopicRequest $request)
+    public function store(Request $request)
     {
-        //
+        $request->validate([
+            'topic' => 'required|string|max:255',
+        ]);
+        $topic =  Topic::create([
+            'topic' => $request->topic,
+        ]);
+        return response()->json([
+            'code' => 200,
+            'status' => 'success',
+            'message' => 'Topic created successfully',
+            'data' => $topic
+        ], 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function show(topic $topic)
+    public function show($topic)
     {
-        //
+
+        $targetTopic = Topic::find($topic);
+
+        if ($targetTopic) {
+            return response()->json([
+                'code' => 200,
+                'status' => 'success',
+                'message' => 'Topic returned successfully',
+                'data' => $targetTopic
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 404,
+                'status' => 'success',
+                'message' => 'Topic not found'
+            ], 404);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function edit(topic $topic)
+    public function edit(Topic $topic)
     {
         //
     }
@@ -64,11 +88,11 @@ class TopicController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatetopicRequest  $request
-     * @param  \App\Models\topic  $topic
+     * @param  \App\Http\Requests\UpdateTopicRequest  $request
+     * @param  \App\Models\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatetopicRequest $request, topic $topic)
+    public function update(UpdateTopicRequest $request, Topic $topic)
     {
         //
     }
@@ -76,10 +100,10 @@ class TopicController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\topic  $topic
+     * @param  \App\Models\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(topic $topic)
+    public function destroy(Topic $topic)
     {
         //
     }
