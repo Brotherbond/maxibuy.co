@@ -6,6 +6,9 @@
 
 #### Postman API => https://documenter.getpostman.com/view/14901487/VUxKVAUq
 
+
+NB: The Subscriber repo is added as a submodule to this, link above.
+
 NB: pusher app key & secret in .env file  could be any random value and doesn't link to my live account
 
 <br>
