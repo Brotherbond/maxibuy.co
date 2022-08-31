@@ -45,7 +45,7 @@ cd /var/www/html
 <br>
 <br>
 
-## start Publisher terminal => both servers work using database for queue setup
+### start Publisher terminal => both servers work using database for queue setup
 
 <i style="color:green">
 
@@ -55,7 +55,7 @@ npm run dev
 
 </i>
 
-## start Subscriber terminal
+### start Subscriber terminal
 
 <i style="color:green">
 
