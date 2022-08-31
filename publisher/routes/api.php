@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 
 use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\TopicController;
@@ -29,3 +30,10 @@ Route::apiResource('topics', TopicController::class);
 Route::post('subscribe/{topic}', [SubscriberController::class, 'create'])->name('subscribe');
 
 Route::post('publish/{topic}', [MessageController::class, 'publish'])->name('publish');
+
+
+Route::post('/messageWebhook', function (Request $request) { //making external request NB won't work making request to itself
+    $url = 'http://subscriber.test/api/messageWebhook';
+    $response = Http::post($url)->json();
+    return response()->json(['messagepub' => $request->all(), 'test' => $response], 200);
+});
