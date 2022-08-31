@@ -1,56 +1,118 @@
 # Publisher & Subscriber System
 
-### Publisher  => https://github.com/Brotherbond/maxibuy.co
+#### Publisher  => https://github.com/Brotherbond/maxibuy.co
 
-### Subscriber =>  https://github.com/Brotherbond/websocket
-## Using docker to run the setup
+#### Subscriber =>  https://github.com/Brotherbond/websocket
+<br>
+
+## Requirements / Tools =>  Docker, VS code, Sequel Ace
+<br>
+
+### Using docker to run the setup
 
 Both servers are laravel based. copies of the subscriber server can used for multiple tests
 
-## create multiple subscriber server and adjust the environment 
+### create multiple subscriber server and adjust the environment 
 
 cp -r subscriber subscriber2
 
+<br>
+<br>
+
 # Setup
 
-- git clone the repo
+- git clone the repos
 
-- mv .env.dev .env => rename the .env.dev file for each server
+- cp .env.docker to .env => rename the .env.docker file for each server
 
 - set APP_PORT, VITE_PORT, DOCKER_APP_URL and FORWARD_ values in the .env file for new server in case of multiple system
 
-## Switch user to sail to work in container environment, NB default is set as root
+<i style="color:yellow">
+
+#### Optional if switching user to sail to work in container environment, add WWWUSER and WWWGROUP. NB default is set as root
 
 su - sail 
+##### switch to /var/www/html
 
 cd /var/www/html
+</i>
+<br>
+<br>
 
-## Open each server folder in terminal, install packages then sail up
+## start Publisher terminal => both servers work using database for queue setup
 
-composer install && ./vendor/bin/sail up -d
-
-## To send notification from publisher on a separate terminal
+<i style="color:green">
 
 php artisan queue:work
 
-## start websocket for subscriber alone
+npm run dev
+
+</i>
+
+## start Subscriber terminal
+
+<i style="color:green">
+
+php artisan queue:work
+
+npm run dev
 
 php artisan websockets:serve
 
-## install and run blade in dev mode
+</i>
 
+<br>
+
+##  127.0.0.1:8000 for Publisher server 
+##  127.0.0.1:9000 for Subscriber server 1
+
+<br>
+
+# Extra info
+
+
+### Open each server folder in terminal, install packages then sail up
+
+composer install &&  npm run dev && ./vendor/bin/sail up -d
+
+<br>
+
+### To send notification from publisher on a separate terminal
+
+<i>
+php artisan queue:work
+</i>
+
+<br>
+
+### start websocket for subscriber alone
+
+<i>
+php artisan websockets:serve
+
+</i>
+
+<br>
+
+### install and run blade in dev mode
+
+<i>
 pnpm i && pnpm run dev # NB pnpm is used here just like npm or yarn
+</i>
 
-## test event in tinker
+<br>
 
+### To stop process, close from docker or open required server folder in terminal, then sail down
+<i>
+./vendor/bin/sail down
+</i>
+
+<br>
+
+### test subscriber event in tinker
+<i>
 php artisan tinker
 
 event (new \App\Events\NewTrade('new'))
 
-
-# To stop process, close from docker or open required server folder in terminal, then sail down
-
-./vendor/bin/sail down
-
-
-## effect can be seen on 127.0.0.1:9000 for subscriber server 1
+</i>
