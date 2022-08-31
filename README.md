@@ -12,10 +12,16 @@
 
 Both servers are laravel based. copies of the subscriber server can used for multiple tests
 
-### create multiple subscriber server and adjust the environment 
+<br>
 
+<span>
+
+### To create multiple subscriber server and adjust the environment 
+
+<i style="color:yellow">
 cp -r subscriber subscriber2
-
+</i>
+</span>
 <br>
 <br>
 
