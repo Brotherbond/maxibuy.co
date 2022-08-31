@@ -51,3 +51,6 @@ event (new \App\Events\NewTrade('new'))
 # To stop process, close from docker or open required server folder in terminal, then sail down
 
 ./vendor/bin/sail down
+
+
+## effect can be seen on 127.0.0.1:9000 for subscriber server 1
