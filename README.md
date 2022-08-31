@@ -33,9 +33,9 @@ composer install && ./vendor/bin/sail up -d
 
 php artisan queue:work
 
-## start websocket  
+## start websocket for subscriber alone
 
-php artisan websockets:serve --port=6003
+php artisan websockets:serve
 
 ## install and run blade in dev mode
 
