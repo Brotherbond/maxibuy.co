@@ -1,5 +1,5 @@
 # Publisher & Subscriber System
-##### using Broadcast, Events, Job, Notification, Queue
+##### using Broadcast, Events, Job, Realtime Notification, Queue
 #### Publisher  => https://github.com/Brotherbond/maxibuy.co
 
 #### Subscriber =>  https://github.com/Brotherbond/websocket
