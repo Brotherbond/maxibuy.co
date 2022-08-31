@@ -1,4 +1,9 @@
-# Using docker to run the setup
+# Publisher & Subscriber System
+
+### Publisher  => https://github.com/Brotherbond/maxibuy.co
+
+### Subscriber =>  https://github.com/Brotherbond/websocket
+## Using docker to run the setup
 
 Both servers are laravel based. copies of the subscriber server can used for multiple tests
 
