@@ -3,9 +3,15 @@
 #### Publisher  => https://github.com/Brotherbond/maxibuy.co
 
 #### Subscriber =>  https://github.com/Brotherbond/websocket
+
+#### Postman API => https://documenter.getpostman.com/view/14901487/VUxKVAUq
+
+NB: pusher app key & secret in .env file  could be any random value and doesn't link to my live account
+
 <br>
 
 ## Requirements / Tools =>  Docker, VS code, Sequel Ace
+
 <br>
 
 ### Using docker to run the setup
